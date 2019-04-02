@@ -28,6 +28,10 @@ private:
 public:
 	// It decrements the number of minutes left  till the next customer
 	Customer* nextMinute();
+
+
+
+	
 };
 
 
@@ -40,15 +44,14 @@ private:
 	int timeSinceBO; //in minutes 
 	Customer * cur; //a pointer to a current Customer being helped (or null if none is being helped)
 	std::queue<Customer*> cosLine; 
-	CustomerGenerator * pCG;  //a reference to a CustomerGenerator object
-	int maxQLength;  //integer tracking the maximum queue length seen during the day
+	CustomerGenerator frontDoor;  //a reference to a CustomerGenerator object
+	int costumerCount;  //integer tracking the maximum queue length seen during the day
 	int maxWTime;  //integer tracking the maximum wait time
 
 public:
-	Bank(); 
-	~Bank(); 
-	void nextMin(int & min);
-	void simulate(); 
+	Bank(const int & workDayLength ); //give a work dy length 
+	void nextMin();
+	void simulate(); //loop over minutes and work day 
 };
 
 

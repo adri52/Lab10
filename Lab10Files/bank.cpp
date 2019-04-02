@@ -39,23 +39,24 @@ Customer* CustomerGenerator::nextMinute()
 		Customer * nCusPtr = new Customer; 
 		nCusPtr->helpTime = randInt1To4(); //we assign a number for it to get help 
 		return nCusPtr;
+		
 	}
 
 	return nullptr; 
 }
 
-Bank::Bank()
+Bank::Bank(const int & workDayLength)
 {
-	workDay = 0; 
+	workDay = workDayLength; 
 	timeSinceBO = 0; 
 	cur = nullptr; 
-	pCG = nullptr;
-	maxQLength = 0;
+	CustomerGenerator frontDoor;
+	costumerCount = 0;
 	maxWTime = 0;
  
 }
 
-void Bank::nextMin(int & min)
+void Bank::nextMin()
 {
 	timeSinceBO++; 
 	//if there is a customer being helped, 
@@ -63,12 +64,42 @@ void Bank::nextMin(int & min)
 	if (cur)
 	{
 		(cur->helpTime)--;
+
+		
 		//if the customer has no more minutes required, the customer leaves
 		if (cur->helpTime == 0)
 		{
+
 			//we remove the costumer
+			if (!cosLine.empty())
+			{
+				delete cur;
+
+				cur = cosLine.front();
+				cosLine.pop();
+
+			}
+			else
+				cur = nullptr;
+
 		}
+		
 	}
+	//this will tell us what the maximun wait time is 
+	if (timeSinceBO < workDay)
+	{
+		Customer*  temp;
+
+		temp= frontDoor.nextMinute();
+		if (temp != nullptr)
+		{
+			costumerCount++;
+			maxWTime += temp->helpTime;
+			temp->arrivalTime = timeSinceBO;
+		}
+
+	}
+
 }
 
 
@@ -76,5 +107,10 @@ void Bank::nextMin(int & min)
 
 void Bank::simulate()
 {
+	Bank test(60);
+
+	do {
+		test.nextMin();
+	} while (test.timeSinceBO <= test.workDay);
 
 }
