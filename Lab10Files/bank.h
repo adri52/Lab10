@@ -28,14 +28,31 @@ private:
 public:
 	// It decrements the number of minutes left  till the next customer
 	Customer* nextMinute();
-
-
-
-	
+	virtual int getNextDelay();
+	virtual int getHelpNeeded();
 };
 
 
- 
+ //sub-class to be able to test; 
+class FixedCG :CustomerGenerator
+{
+public:
+
+	//FixedCG (delays, needs) vector <int>    override ? 
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class Bank
 {
