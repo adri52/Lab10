@@ -19,9 +19,9 @@ using namespace std;
 */
 int randInt1To4() {
 	// shared random number generator (seeded with clock time)
-	static std::default_random_engine randEngine(time(0));
+	static default_random_engine randEngine(time(0));
 	// shared uniform distribution
-	static std::uniform_int_distribution<int> dist1To4(1, 4);
+	static uniform_int_distribution<int> dist1To4(1, 4);
 	// return a sample
 	return dist1To4(randEngine);
 
@@ -104,10 +104,10 @@ void Bank::nextMin()
 
 
 
-
+//include 
 void Bank::simulate()
 {
-	Bank test(60);
+	Bank test(workDay);
 
 	do {
 		test.nextMin();
