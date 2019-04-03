@@ -28,10 +28,13 @@ private:
 public:
 	// It decrements the number of minutes left  till the next customer
 	Customer* nextMinute();
-	virtual int getNextDelay();
-	virtual int getHelpNeeded();
+	//virtual int getNextDelay();  ************************************************
+	//virtual int getHelpNeeded(); ************************************************
 };
 
+
+
+/*
 
  //sub-class to be able to test; 
 class FixedCG :CustomerGenerator
@@ -41,6 +44,8 @@ public:
 	//FixedCG (delays, needs) vector <int>    override ? 
 };
 
+
+*/
 
 
 
@@ -62,13 +67,15 @@ private:
 	Customer * cur; //a pointer to a current Customer being helped (or null if none is being helped)
 	std::queue<Customer*> cosLine; 
 	CustomerGenerator frontDoor;  //a reference to a CustomerGenerator object
-	int costumerCount;  //integer tracking the maximum queue length seen during the day
+	int customerCount;  //integer tracking the maximum queue length seen during the day
 	int maxWTime;  //integer tracking the maximum wait time
 
 public:
 	Bank(const int & workDayLength ); //give a work dy length 
 	void nextMin();
 	void simulate(); //loop over minutes and work day 
+	int getCustomerCount() const;
+	int getmaxWTime() const; 
 };
 
 

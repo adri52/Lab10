@@ -51,7 +51,7 @@ Bank::Bank(const int & workDayLength)
 	timeSinceBO = 0; 
 	cur = nullptr; 
 	CustomerGenerator frontDoor;
-	costumerCount = 0;
+	customerCount = 0;
 	maxWTime = 0;
  
 }
@@ -78,6 +78,9 @@ void Bank::nextMin()
 				cur = cosLine.front();
 				cosLine.pop();
 
+				//description of what is happening
+				cout << "Customer leaving, and new one being helped" << endl;
+				//****************************************************
 			}
 			else
 				cur = nullptr;
@@ -93,10 +96,21 @@ void Bank::nextMin()
 		temp= frontDoor.nextMinute();
 		if (temp != nullptr)
 		{
-			costumerCount++;
+			//description of what is happening
+			cout << "New customer arrived" << endl; 
+			//**************************************
+			customerCount++;
 			maxWTime += temp->helpTime;
 			temp->arrivalTime = timeSinceBO;
+
+
+
+
+
+			//assig
+			cur = cosLine.front();
 		}
+
 
 	}
 
@@ -113,4 +127,17 @@ void Bank::simulate()
 		test.nextMin();
 	} while (test.timeSinceBO <= test.workDay);
 
+}
+
+
+
+
+int Bank::getmaxWTime() const
+{
+	return maxWTime;
+}
+
+int Bank::getCustomerCount() const
+{
+	return customerCount; 
 }
