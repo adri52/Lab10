@@ -29,7 +29,7 @@ int randInt1To4() {
 
 Customer* CustomerGenerator::nextMinute()
 {
-	remainingTime--; 
+	
 	if (remainingTime == 0)
 	{
 		// resets the time until the next customer with a new random integer between 1 and 4
@@ -41,8 +41,13 @@ Customer* CustomerGenerator::nextMinute()
 		return nCusPtr;
 		
 	}
+	else
+	{
+		remainingTime--;
+		return nullptr;
+	}
 
-	return nullptr; 
+	
 }
 
 Bank::Bank(const int & workDayLength)
@@ -71,7 +76,7 @@ void Bank::nextMin()
 		{
 
 			//we remove the costumer
-			if (!cosLine.empty())
+			if (!(cosLine.empty()))
 			{
 				delete cur;
 
@@ -105,10 +110,8 @@ void Bank::nextMin()
 
 
 
-
-
-			//assig
-			cur = cosLine.front();
+			if(customerCount == 1)
+				cur = temp;
 		}
 
 
