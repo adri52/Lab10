@@ -16,7 +16,7 @@ using namespace std;
 */
 int randInt1To4() {
 	// shared random number generator (seeded with clock time)
-	static default_random_engine randEngine(time(0));
+	static default_random_engine randEngine(static_cast<unsigned int>( time(0)));
 	// shared uniform distribution
 	static uniform_int_distribution<int> dist1To4(1, 4);
 	// return a sample
@@ -26,15 +26,22 @@ int randInt1To4() {
 
 Customer* CustomerGenerator::nextMinute()
 {
+	//if is less than 0, wich means we have not initialize it then ..
+	if (remainingTime < 0) 
+	{
+		remainingTime = getNextDelay();
+
+	} 
+
 	//if the remaining time ( the minutes left before the next customer comes) is 0
 	if (remainingTime == 0)
 	{
 		// resets the time until the next customer with a new random integer between 1 and 4
-		remainingTime = randInt1To4(); 
+		remainingTime = getNextDelay(); 
 	
 		//Create a new costumer 
 		Customer * nCusPtr = new Customer; 
-		nCusPtr->helpTime = randInt1To4(); //we assign the amount oof minutes it will need help 
+		nCusPtr->helpTime = getHelpNeeded(); //we assign the amount oof minutes it will need help 
 		
 		return nCusPtr;
 		
@@ -47,6 +54,47 @@ Customer* CustomerGenerator::nextMinute()
 
 	
 }
+
+//the first one
+int CustomerGenerator::getNextDelay()
+{
+	return randInt1To4();
+}
+
+int CustomerGenerator::getHelpNeeded()
+{
+	return randInt1To4();
+}
+
+
+
+
+// we override the virtual functions 
+ int FixedCG::getNextDelay()
+{
+	int temp = delays_.front();
+	delays_.pop();
+	delays_.push(temp);
+
+	return temp;
+}
+
+ int FixedCG::getHelpNeeded()
+{
+	int temp = needs_.front();
+	needs_.pop();
+	needs_.push(temp);
+
+	return temp;
+}
+
+
+
+
+
+
+
+
 
 Bank::Bank(const int & workDayLength)
 {

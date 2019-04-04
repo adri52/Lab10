@@ -4,6 +4,7 @@
 #include<string>
 #include<queue>
 
+using std::queue; 
 
 
 struct Customer
@@ -23,29 +24,44 @@ class CustomerGenerator
 {
 private: 
 	// it indicates the number of minutes left before the next customer
-	int remainingTime =0; 
+	int remainingTime =-1; 
 
 public:
 	// It decrements the number of minutes left  till the next customer
 	Customer* nextMinute();
-	//virtual int getNextDelay();  ************************************************
-	//virtual int getHelpNeeded(); ************************************************
+
+
+
+	virtual int getNextDelay();
+
+	virtual int getHelpNeeded();
+	
 };
 
 
 
-/*
+
 
  //sub-class to be able to test; 
-class FixedCG :CustomerGenerator
+class FixedCG : public CustomerGenerator
 {
+private: 
+	queue<int> delays_;
+	queue<int> needs_;
 public:
 
-	//FixedCG (delays, needs) vector <int>    override ? 
+	FixedCG(queue<int> delays, queue<int> needs):delays_(delays), needs_(needs)
+	{
+	}
+
+	virtual int getNextDelay() override;
+	virtual int getHelpNeeded() override;
+	
 };
 
 
-*/
+
+
 
 
 
