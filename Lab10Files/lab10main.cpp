@@ -26,9 +26,5 @@ int main()
 	Bank firstTest(time);
 	firstTest.simulate();
 
-	//cout << firstTest.getMaxCustomerCount() << endl;
-	//cout << firstTest.getmaxWTime() << endl; 
-
-	cout << "pass";
 
 }

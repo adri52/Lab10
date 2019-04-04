@@ -94,11 +94,6 @@ void Bank::nextMin()
 			
 			temp->arrivalTime = timeSinceBO;
 			cusLine.push(temp);
-			
-
-			//*************************************************************************************
-			
-
 		}
 
 		if (cusLine.size() > maxCustomerCount)
@@ -119,9 +114,6 @@ void Bank::nextMin()
 		
 		}
 	}
-
-	//cout << maxWTime << endl;
-	//cout << maxCustomerCount << endl; 
 }
 
 
@@ -130,11 +122,7 @@ void Bank::nextMin()
 void Bank::simulate()
 {
 	Bank test(workDay);
-	//for (int i = 0; i < test.workDay; i++)
-		//test.nextMin();
 
-
-	
 	do {
 		test.nextMin();
 	} while (test.timeSinceBO <= test.workDay);
