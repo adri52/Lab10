@@ -65,10 +65,10 @@ private:
 	int workDay; //in minutes 
 	int timeSinceBO; //in minutes 
 	Customer * cur; //a pointer to a current Customer being helped (or null if none is being helped)
-	std::queue<Customer*> cusLine; 
+	std::queue<Customer*> cusLine; //the customer's line 
 	CustomerGenerator frontDoor;  //a reference to a CustomerGenerator object
-	int maxCustomerCount;  //integer tracking the maximum queue length seen during the day
-	int maxWTime;  //integer tracking the maximum wait time
+	int maxCustomerCount;  //integer tracking the maximum amount of customers that where waiting in the line
+	int maxWTime;  //integer tracking the maximum wait time 1 costumer had to wait
 
 public:
 	Bank(const int & workDayLength ); //give a work dy length 

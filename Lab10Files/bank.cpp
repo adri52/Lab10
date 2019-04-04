@@ -9,9 +9,6 @@
 using namespace std; 
 
 
-//How long can the bank be opened? 
-//Do we need a memeber variable or function to determine that? 
-
 
 
 /**
@@ -29,15 +26,15 @@ int randInt1To4() {
 
 Customer* CustomerGenerator::nextMinute()
 {
-	
+	//if the remaining time ( the minutes left before the next customer comes) is 0
 	if (remainingTime == 0)
 	{
 		// resets the time until the next customer with a new random integer between 1 and 4
 		remainingTime = randInt1To4(); 
 	
-		//a new costumer 
+		//Create a new costumer 
 		Customer * nCusPtr = new Customer; 
-		nCusPtr->helpTime = randInt1To4(); //we assign a number for it to get help 
+		nCusPtr->helpTime = randInt1To4(); //we assign the amount oof minutes it will need help 
 		
 		return nCusPtr;
 		
@@ -62,17 +59,26 @@ Bank::Bank(const int & workDayLength)
  
 }
 
+
+
+
 void Bank::nextMin()
 {
+
+	//PART 1 
+	//increment the number of minutes since opening
 	timeSinceBO++; 
-	//if there is a customer being helped, 
-	//decrement the amount of help time still required for that customer;
+
+
+
+	//PART 2
+	//if there is a customer being helped:
 	if (cur)
 	{
+		//we decrement the amount of help time (since its been a minute) 
 		(cur->helpTime)--;
 
-		
-		//if the customer has no more minutes required, the customer leaves
+		//if the customer has no more minutes in helpTime, the customer leaves
 		if (cur->helpTime == 0)
 		{
 			delete cur;
@@ -80,34 +86,58 @@ void Bank::nextMin()
 		}
 		
 	}
-	//this will tell us what the maximun wait time is 
+
+
+
+	//PART 3
+	//If the time since the bank opened is less than the work day  
 	if (timeSinceBO < workDay)
 	{
+		//create a temp
 		Customer*  temp;
 
+		//we call the nextMinute() function from the CustomerGenerator 
 		temp= frontDoor.nextMinute();
+
+		//nextMinute() retuneda new Custormer (meaning it did not retuned a nullptr)
 		if (temp != nullptr)
 		{
-			//description of what is happening
+			//description of what is happening is displayed 
 			cout << "New customer arrived" << endl; 
 			//**************************************
 			
+			//We assign the arrival time
 			temp->arrivalTime = timeSinceBO;
+			//add a new customer to the line 
 			cusLine.push(temp);
 		}
 
+
+
+		//PART 4
+		//We check of the size is line is greated to the maximun customer count we assign it to it
 		if (cusLine.size() > maxCustomerCount)
 			maxCustomerCount = cusLine.size();
 
 	}
 
+
+
+	//PART 5
+	//if there are customers in line and no customer currently being helped
 	if (cusLine.size() > 0 && cur == nullptr)
 	{
+		//the current customer will be the one in front of the line 
 		cur = cusLine.front();
+
+		//we pop him/her from the waiting line
 		cusLine.pop();
-		//description of what is happening
+		//description of what is happening is displayed
 		cout << "A customer is leaving and new one is being helped" << endl;
 		//********************************************************************
+
+
+		//we update maxWaitTime if necessary
 		if ((timeSinceBO - cur->arrivalTime) > maxWTime)
 		{
 			maxWTime = timeSinceBO - cur->arrivalTime;
@@ -118,18 +148,19 @@ void Bank::nextMin()
 
 
 
-//include 
+//it simulates a day at the bank with the minutes assign by the usser 
 void Bank::simulate()
 {
 	Bank test(workDay);
 
+	//A loop that repeats as long as the mank is still open
 	do {
 		test.nextMin();
 	} while (test.timeSinceBO <= test.workDay);
 	
 
 
-	//cout max
+	//Displaay the maximu customer count and the maximun wait time
 	cout << "The maximun number of customers in line were: "<< test.getMaxCustomerCount() << endl;
 	cout << "The maximun number of minutes a customer had to wait in line were: " <<test.getmaxWTime() << endl; 
 	
@@ -142,11 +173,6 @@ int Bank::getmaxWTime() const
 {
 	return maxWTime;
 }
-
-
-
-
-
 
 
 

@@ -19,6 +19,7 @@ int main()
 	cout << "(customers arriving, being helped, and leaving) over a work day" << endl; 
 	cout << "then it will report the amount of costumertss and what was the maximun wait time." << endl;
 
+	//We get the data from the user to know the amount of minutes the bank will be running
 	cout << "/n Enter how long the bank wll be open ";
 	cin >> time; 
 	
