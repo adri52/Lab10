@@ -38,6 +38,7 @@ Customer* CustomerGenerator::nextMinute()
 		//a new costumer 
 		Customer * nCusPtr = new Customer; 
 		nCusPtr->helpTime = randInt1To4(); //we assign a number for it to get help 
+		
 		return nCusPtr;
 		
 	}
@@ -56,7 +57,7 @@ Bank::Bank(const int & workDayLength)
 	timeSinceBO = 0; 
 	cur = nullptr; 
 	CustomerGenerator frontDoor;
-	customerCount = 0;
+	maxCustomerCount = 0;
 	maxWTime = 0;
  
 }
@@ -74,22 +75,8 @@ void Bank::nextMin()
 		//if the customer has no more minutes required, the customer leaves
 		if (cur->helpTime == 0)
 		{
-
-			//we remove the costumer
-			if (!(cosLine.empty()))
-			{
-				delete cur;
-
-				cur = cosLine.front();
-				cosLine.pop();
-
-				//description of what is happening
-				cout << "Customer leaving, and new one being helped" << endl;
-				//****************************************************
-			}
-			else
-				cur = nullptr;
-
+			delete cur;
+			cur = nullptr;
 		}
 		
 	}
@@ -104,19 +91,37 @@ void Bank::nextMin()
 			//description of what is happening
 			cout << "New customer arrived" << endl; 
 			//**************************************
-			customerCount++;
-			maxWTime += temp->helpTime;
+			
 			temp->arrivalTime = timeSinceBO;
+			cusLine.push(temp);
+			
 
+			//*************************************************************************************
+			
 
-
-			if(customerCount == 1)
-				cur = temp;
 		}
 
+		if (cusLine.size() > maxCustomerCount)
+			maxCustomerCount = cusLine.size();
 
 	}
 
+	if (cusLine.size() > 0 && cur == nullptr)
+	{
+		cur = cusLine.front();
+		cusLine.pop();
+		//description of what is happening
+		cout << "A customer is leaving and new one is being helped" << endl;
+		//********************************************************************
+		if ((timeSinceBO - cur->arrivalTime) > maxWTime)
+		{
+			maxWTime = timeSinceBO - cur->arrivalTime;
+		
+		}
+	}
+
+	//cout << maxWTime << endl;
+	//cout << maxCustomerCount << endl; 
 }
 
 
@@ -125,11 +130,21 @@ void Bank::nextMin()
 void Bank::simulate()
 {
 	Bank test(workDay);
+	//for (int i = 0; i < test.workDay; i++)
+		//test.nextMin();
 
+
+	
 	do {
 		test.nextMin();
 	} while (test.timeSinceBO <= test.workDay);
+	
 
+
+	//cout max
+	cout << "The maximun number of customers in line were: "<< test.getMaxCustomerCount() << endl;
+	cout << "The maximun number of minutes a customer had to wait in line were: " <<test.getmaxWTime() << endl; 
+	
 }
 
 
@@ -140,7 +155,14 @@ int Bank::getmaxWTime() const
 	return maxWTime;
 }
 
-int Bank::getCustomerCount() const
+
+
+
+
+
+
+
+int Bank::getMaxCustomerCount() const
 {
-	return customerCount; 
+	return maxCustomerCount; 
 }

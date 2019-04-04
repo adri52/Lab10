@@ -14,17 +14,20 @@ the queue during the day and the maximum wait time.*/
 
 int main()
 {
-
+	int time;
 	cout << "This program will be simulating the sequence id events at the bank" << endl;
 	cout << "(customers arriving, being helped, and leaving) over a work day" << endl; 
 	cout << "then it will report the amount of costumertss and what was the maximun wait time." << endl;
+
+	cout << "/n Enter how long the bank wll be open ";
+	cin >> time; 
 	
 
-	Bank firstTest(60);
+	Bank firstTest(time);
 	firstTest.simulate();
 
-	cout << firstTest.getCustomerCount() << endl;
-	cout << firstTest.getmaxWTime() << endl; 
+	//cout << firstTest.getMaxCustomerCount() << endl;
+	//cout << firstTest.getmaxWTime() << endl; 
 
 	cout << "pass";
 
