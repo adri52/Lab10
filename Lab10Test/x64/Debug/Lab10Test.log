@@ -1,2 +1,5 @@
-﻿  lab10test.cpp
+﻿  bank.cpp
+c:\users\adria\onedrive\escritorio\lab10\lab10files\bank.cpp(168): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  lab10test.cpp
+  Generating Code...
   Lab10Test.vcxproj -> C:\Users\adria\OneDrive\Escritorio\Lab10\x64\Debug\Lab10Test.exe

@@ -96,12 +96,11 @@ int CustomerGenerator::getHelpNeeded()
 
 
 
-Bank::Bank(const int & workDayLength)
+Bank::Bank(const int & workDayLength, CustomerGenerator& cust) :frontDoor(&cust)
 {
 	workDay = workDayLength; 
 	timeSinceBO = 0; 
 	cur = nullptr; 
-	CustomerGenerator frontDoor;
 	maxCustomerCount = 0;
 	maxWTime = 0;
  
@@ -145,7 +144,7 @@ void Bank::nextMin()
 		Customer*  temp;
 
 		//we call the nextMinute() function from the CustomerGenerator 
-		temp= frontDoor.nextMinute();
+		temp = frontDoor->nextMinute();
 
 		//nextMinute() retuneda new Custormer (meaning it did not retuned a nullptr)
 		if (temp != nullptr)
@@ -199,18 +198,20 @@ void Bank::nextMin()
 //it simulates a day at the bank with the minutes assign by the usser 
 void Bank::simulate()
 {
-	Bank test(workDay);
+	//Bank test(workDay);
 
 	//A loop that repeats as long as the mank is still open
 	do {
-		test.nextMin();
-	} while (test.timeSinceBO <= test.workDay);
-	
+		nextMin();
+	} while (timeSinceBO < workDay);
+
+	// check to see if day is over
+	// loop while cur call next min.
 
 
 	//Displaay the maximu customer count and the maximun wait time
-	cout << "The maximun number of customers in line were: "<< test.getMaxCustomerCount() << endl;
-	cout << "The maximun number of minutes a customer had to wait in line were: " <<test.getmaxWTime() << endl; 
+	cout << "The maximun number of customers in line were: "<< getMaxCustomerCount() << endl;
+	cout << "The maximun number of minutes a customer had to wait in line were: " <<getmaxWTime() << endl; 
 	
 }
 
@@ -220,6 +221,11 @@ void Bank::simulate()
 int Bank::getmaxWTime() const
 {
 	return maxWTime;
+}
+
+int Bank::gettime()
+{
+	return timeSinceBO;
 }
 
 

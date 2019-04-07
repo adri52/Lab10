@@ -23,8 +23,9 @@ int main()
 	cout << "/n Enter how long the bank wll be open ";
 	cin >> time; 
 	
-
-	Bank firstTest(time);
+	CustomerGenerator cust; 
+	
+	Bank firstTest(time,cust);
 	firstTest.simulate();
 
 

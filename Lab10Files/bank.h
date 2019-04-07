@@ -64,17 +64,6 @@ public:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 class Bank
 {
 private: 
@@ -82,16 +71,17 @@ private:
 	int timeSinceBO; //in minutes 
 	Customer * cur; //a pointer to a current Customer being helped (or null if none is being helped)
 	std::queue<Customer*> cusLine; //the customer's line 
-	CustomerGenerator frontDoor;  //a reference to a CustomerGenerator object
+	CustomerGenerator *frontDoor;  //a reference to a CustomerGenerator object
 	int maxCustomerCount;  //integer tracking the maximum amount of customers that where waiting in the line
 	int maxWTime;  //integer tracking the maximum wait time 1 costumer had to wait
 
 public:
-	Bank(const int & workDayLength ); //give a work dy length 
+	Bank(const int & workDayLength,CustomerGenerator & cust); //give a work dy length 
 	void nextMin();
 	void simulate(); //loop over minutes and work day 
 	int getMaxCustomerCount() const;
 	int getmaxWTime() const; 
+	int gettime();
 };
 
 
